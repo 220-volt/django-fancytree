@@ -95,8 +95,15 @@ class FancyTreeWidget(Widget):
             output.append(
                 """
                 $(".fancytree_checkboxes").hide();
+                $("#%(id)s").prepend('<input id="%(id)s_fancyExtFilter" placeholder="Filter..." class="fancy-extFilter-text" />');
                 $(function() {
                     $("#%(id)s").fancytree({
+                        extensions: ["filter"],
+                        filter: {
+                          autoApply: true,
+                          counter: true,
+                          mode: "hide"
+                        },            
                         checkbox: true,
                         selectMode: %(select_mode)d,
                         source: %(js_var)s,
@@ -122,7 +129,19 @@ class FancyTreeWidget(Widget):
                             }
                         }
                     });
+
+                    function treeFiltering() {
+                        var tree = $('#%(id)s').fancytree('getTree');
+                        $('#%(id)s_fancyExtFilter').keyup(function(e){
+                            match = $(this).val();
+                            n = tree.filterNodes(match, {
+                                autoExpand: true
+                            });
+                        }).focus();
+                    }
+                    treeFiltering();
                 });
+
                 """ % {
                     'id': attrs['id'],
                     'js_var': js_data_var,
@@ -138,5 +157,5 @@ class FancyTreeWidget(Widget):
             'all': ('fancytree/skin-vista/ui.fancytree.css',)
         }
         js = (
-            'fancytree/jquery.fancytree.min.js',
+            'fancytree/jquery.fancytree-all.min.js',
         )

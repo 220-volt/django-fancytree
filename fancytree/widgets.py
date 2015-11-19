@@ -51,8 +51,9 @@ class FancyTreeWidget(Widget):
         self.choices = list(choices)
 
     def value_from_datadict(self, data, files, name):
-        if isinstance(data, (MultiValueDict, MergeDict)):
-            return data.getlist(name)
+        if self.select_mode == 2:
+            if isinstance(data, (MultiValueDict, MergeDict)):
+                return data.getlist(name)
         return data.get(name, None)
 
     def render(self, name, value, attrs=None, choices=()):

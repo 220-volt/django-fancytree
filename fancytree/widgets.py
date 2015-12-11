@@ -6,7 +6,7 @@ from django.forms.widgets import Widget
 from django.utils.encoding import force_unicode
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
-from django.utils.datastructures import MultiValueDict, MergeDict
+from django.utils.datastructures import MultiValueDict
 from mptt.templatetags.mptt_tags import cache_tree_children
 
 try:
@@ -52,7 +52,7 @@ class FancyTreeWidget(Widget):
 
     def value_from_datadict(self, data, files, name):
         if self.select_mode == 2:
-            if isinstance(data, (MultiValueDict, MergeDict)):
+            if isinstance(data, (MultiValueDict,)):
                 return data.getlist(name)
         return data.get(name, None)
 

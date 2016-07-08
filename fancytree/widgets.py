@@ -138,7 +138,7 @@ class FancyTreeWidget(Widget):
                             n = tree.filterNodes(match, {
                                 autoExpand: true
                             });
-                        }).focus();
+                        });
                     }
                     treeFiltering();
                 });
